@@ -15,7 +15,7 @@ public class CharacterStats : MonoBehaviour//stats 统计（statistics）
     [Header("Offensive stats")]
     public Stat damage;//一个stat 类 damage下有多种属性 base value ,other value   扩展 Stat 类
     public Stat critChance;    //crit n.暴击   //暴击率
-    public Stat critpower;    //    //default value 150%
+    public Stat critPower;    //    //default value 150%
 
     [Header("Defensive stats")]
     public Stat maxHealth;  // 最大生命值属性
@@ -50,7 +50,7 @@ public class CharacterStats : MonoBehaviour//stats 统计（statistics）
 
     protected virtual void Start()
     {
-        critpower.SetDefaultValue(150);
+        critPower.SetDefaultValue(150);
         currentHealth = GetMaxHealthValue();// 初始化当前血量
 
         fx = GetComponent<EntityFX>();
@@ -368,7 +368,7 @@ public class CharacterStats : MonoBehaviour//stats 统计（statistics）
 
     private int CalculateCriticalDamage(int _damage)
     {
-        float totalCritPower = (critpower.GetValue() + strength.GetValue()) * .01f;//暴击伤害倍率
+        float totalCritPower = (critPower.GetValue() + strength.GetValue()) * .01f;//暴击伤害倍率
         //Debug.Log("total crit power %"+totalCritPower);
         float critDamage = _damage * totalCritPower;  //暴击伤害
         //Debug.Log("crit damage before round up"+critDamage);

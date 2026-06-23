@@ -1,9 +1,22 @@
 using UnityEngine;
 
+public enum ItemType
+{ 
+    Material,
+    Equipment
+}    //     public enum ItemType {Material,Equipment}  enum（枚举）是定义一组固定选项的类型，让代码更易读、更安全
+     //     0 = 材料, 1 = 装备
+
+[CreateAssetMenu(fileName ="New Item Data",menuName ="Data/Item")]
 public class ItemData : ScriptableObject  //脚本化对象 //这是一种区别于生命周期的一种类型，一般用来存储一些固定数据
 {
+    //定义物品的“蓝图”。不挂载到场景，作为配置文件存在 Project 中。
+    public ItemType itemType;
     public string itemName;
     public Sprite icon;
+
+    [Range(0,100)] public float dropChance;
+
 }
 
 

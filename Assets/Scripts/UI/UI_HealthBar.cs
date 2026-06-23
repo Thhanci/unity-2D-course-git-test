@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI; //与slide有关，缺少就在下面slider按Alt+enter补齐此行
 
-public class HealthBar_UI : MonoBehaviour
+public class UI_HealthBar : MonoBehaviour
 {
     private Entity entity;
     private CharacterStats myStats;
