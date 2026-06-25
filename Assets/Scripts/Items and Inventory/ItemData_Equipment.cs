@@ -16,6 +16,9 @@ public class ItemData_Equipment : ItemData
 {
     public EquipmentType equipmentType;
 
+    public float itemCooldown;
+    public ItemEffect[] itemEffect;
+
     [Header("Major stats")]  //Major 主要的
     public int strength;  //力量
     public int agility;  //敏捷
@@ -40,6 +43,14 @@ public class ItemData_Equipment : ItemData
 
     [Header("Craft requirements")]
     public List<InventoryItem> craftingMaterials;
+
+    public void Effect(Transform _enemyPosition)//Tip:应用装备特殊效果（闪电，冰与火）
+    {
+        foreach (var item in itemEffect)
+        { 
+            item.ExecuteEffect(_enemyPosition);
+        }
+    }
 
     public void AddModifiers()
     {

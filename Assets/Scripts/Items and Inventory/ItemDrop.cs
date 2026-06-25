@@ -21,7 +21,7 @@ public class ItemDrop : MonoBehaviour
 
         for (int i = 0; i < possibleItemDrop; i++)    // possibleItemDrop 允许的掉落物数量
         {
-            ItemData randomItem = dropList[Random.Range(0, dropList.Count - 1)];
+            ItemData randomItem = dropList[Random.Range(0, dropList.Count - 1)];//Tip_hold on repair:死去的骷髅掉落物为0  possibleDrop 里没有物品 
 
             dropList.Remove(randomItem);
             DropItem(randomItem);
@@ -37,6 +37,8 @@ public class ItemDrop : MonoBehaviour
         Vector2 randomVelocity = new Vector2(Random.Range(-5,5),Random.Range(15,20));
 
         newDrop.GetComponent<ItemObject>().SetupItem(_itemData,randomVelocity);
+
+        //Debug.Log("drop item");
     }
 
 }

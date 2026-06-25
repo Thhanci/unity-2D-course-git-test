@@ -52,6 +52,16 @@ public class UI_ItemSlot : MonoBehaviour ,IPointerDownHandler   // UI展示   //
         //throw new System.NotImplementedException();
         //Debug.Log("Equiped new item+ " + item.data.itemName);
 
+        if (Input.GetKey(KeyCode.LeftControl))
+        {
+
+            //ItemDrop itemDrop = FindObjectOfType<ItemDrop>();
+            //itemDrop.DropItem(item.data);   //protected
+
+            Inventory.instance.RemoveItem(item.data);
+            return;
+        }
+
         if (item != null && item.data != null && item.data.itemType == ItemType.Equipment)   //Tip:原 item.data.itemType == ItemType.Equipment     修改 item != null && item.data != null  && item.data.itemType == ItemType.Equipment      Debug.Log("Equiped new item+ " + item.data.itemName);
             Inventory.instance.Equipment(item.data);    //因为在UI_ItemSlot的鼠标触发事件中，没有判断当前点击的slot中的InventoryItem是否为null,没有判空，可能报错，解决方法，把条件改成上一行注释
 

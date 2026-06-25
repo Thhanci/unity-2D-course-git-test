@@ -105,6 +105,12 @@ public class Player : Entity  //定义class类Player
         if (Input.GetKeyDown(KeyCode.F))
             skill.crystal.CanUseSkill();  // skill=SkillMananger.instance;
 
+        if (Input.GetKeyDown(KeyCode.Alpha1)) 
+        {
+            //Debug.Log("use flask");
+            Inventory.instance.UseFlask();
+        }
+
     }
 
     public override void SlowEntityBy(float _slowPercentage, float _slowDuration)

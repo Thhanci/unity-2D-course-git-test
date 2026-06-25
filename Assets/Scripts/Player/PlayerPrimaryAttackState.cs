@@ -5,10 +5,10 @@ using UnityEngine;
 public class PlayerPrimaryAttackState : PlayerState
 {
 
-    private int comboCounter;
+    public int comboCounter { get; private set; }
 
     private float lastTimeAttacked;
-    private float comboWindow = 2;
+    private float comboWindow = 2;//下一次连斩时间,超时取消连击
     public PlayerPrimaryAttackState(Player _player, PlayerStateMachine _stateMachine, string _animBoolName) : base(_player, _stateMachine, _animBoolName)
     {
     }

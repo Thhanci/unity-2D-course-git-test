@@ -1,9 +1,11 @@
 using JetBrains.Annotations;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Burst.CompilerServices;
 using Unity.VisualScripting;
 using UnityEngine;
 
+//Tip_repaire_wait:刚才刚才发现一个bug，使用回旋剑的时候如果切换武器会导致卡顿
 public class Sword_Skill_Controller : MonoBehaviour
 {
     //private float returntimerx=0;   //个人额外设置,飞剑飞回来时间
@@ -137,7 +139,7 @@ public class Sword_Skill_Controller : MonoBehaviour
             {
                 spinTimer -= Time.deltaTime;
 
-                transform.position = Vector2.MoveTowards(transform.position, new Vector2(transform.position.x + spinDirection, transform.position.y), 1.5f * Time.deltaTime);
+                //transform.position = Vector2.MoveTowards(transform.position, new Vector2(transform.position.x + spinDirection, transform.position.y), 1.5f * Time.deltaTime);
 
                 if (spinTimer < 0)
                 {
@@ -253,7 +255,13 @@ public class Sword_Skill_Controller : MonoBehaviour
     {
         //enemy.DamageEffect();
         player.stats.DoDamage(enemy.GetComponent<CharacterStats>());
-        enemy.StartCoroutine("FreezeTimerFor", freezeTimeDuration);  //类比玉米射手仍黄油
+        enemy.FreezeTimeFor(freezeTimeDuration);
+        //enemy.StartCoroutine("FreezeTimerFor", freezeTimeDuration);  //类比玉米射手仍黄油
+
+        ItemData_Equipment equipedAmulet = Inventory.instance.GetEquipment(EquipmentType.Amulet);//护符，水晶额外造成雷电伤害
+
+        if (equipedAmulet != null)
+            equipedAmulet.Effect(enemy.transform);
     }
 
     private void SetupTargetsForBounce(Collider2D collision)

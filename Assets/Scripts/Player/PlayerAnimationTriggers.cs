@@ -25,8 +25,22 @@ public class PlayerAnimationTriggers : MonoBehaviour
             {
                 EnemyStats _target=hit.GetComponent<EnemyStats>();
 
+                if (_target != null) //Tip_repair:不能对被销毁的敌人造成伤害
+                {
+                    player.stats.DoDamage(_target);
+                }
 
-                player.stats.DoDamage(_target);
+                //Inventory.instance.GetEquipment(EquipmentType.Weapon)?.ExecuteItemEffect();
+                //Inventory.instance.GetEquipment(EquipmentType.Weapon).Effect(_target.transform);//没有判空 //Inventory.instance.GetEquipment(EquipmentType.Weapon)是 类 ItemData_Equipment
+
+                ItemData_Equipment weaponData = Inventory.instance.GetEquipment(EquipmentType.Weapon);
+
+                if (weaponData != null)
+                    weaponData.Effect(_target.transform);
+
+
+                //inventory get weapon call item effect
+                 
 
                 //hit.GetComponent<Enemy>().Damage();
                 /*

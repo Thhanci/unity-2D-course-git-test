@@ -18,7 +18,7 @@ public class UI_HealthBar : MonoBehaviour
         myStats = GetComponentInParent<CharacterStats>();
 
         entity.onFlipped += FlipUI;
-        myStats.onHealthChanged += UpdateHealthUI;
+        myStats.onHealthChanged += UpdateHealthUI;  // 订阅事件：血量变化时，自动调用 UpdateHealthUI
 
         UpdateHealthUI();//在游戏开始前更新游戏AI
 

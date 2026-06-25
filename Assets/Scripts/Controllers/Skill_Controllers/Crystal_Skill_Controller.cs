@@ -77,6 +77,12 @@ public class Crystal_Skill_Controller : MonoBehaviour
             {
                 //hit.GetComponent<Enemy>().DamageEffect();//水晶爆炸伤害
                 player.stats.DoMagicalDamage(hit.GetComponent<CharacterStats>());
+
+                ItemData_Equipment equipedAmulet = Inventory.instance.GetEquipment(EquipmentType.Amulet);//护符，水晶额外造成雷电伤害
+
+                if (equipedAmulet != null)
+                    equipedAmulet.Effect(hit.transform);
+
             }
         }
     }

@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 
@@ -46,7 +47,7 @@ public class CharacterStats : MonoBehaviour//stats 统计（statistics）
     public int currentHealth;// 当前生命值
 
     public System.Action onHealthChanged;
-    protected bool isDead;
+    public bool isDead { get; private set; }
 
     protected virtual void Start()
     {
@@ -83,7 +84,20 @@ public class CharacterStats : MonoBehaviour//stats 统计（statistics）
 
     }
 
+    public virtual void IncreaseStatBy(int _modifier, float _duration, Stat _statToModify)
+    {
+        //start coroutine for stat increase
+        StartCoroutine(StatModCoroutine(_modifier, _duration, _statToModify));
+    }
 
+    private IEnumerator StatModCoroutine(int _modifier, float _duration, Stat _statToModify)
+    {
+        _statToModify.AddModifier(_modifier);
+
+        yield return new WaitForSeconds(_duration);
+
+        _statToModify.RemoveModifier(_modifier);
+    }
 
     public virtual void DoDamage(CharacterStats _targetStats)
     {
@@ -104,7 +118,7 @@ public class CharacterStats : MonoBehaviour//stats 统计（statistics）
 
         //if the current weapon has fire damage
         //then
-        //DoMagicalDamage(_targetStats);//法伤
+        DoMagicalDamage(_targetStats);//法伤  //remove if you don't want to  apply magic hit on primary attack
     }
 
     #region Magical damage and ailments
@@ -261,7 +275,7 @@ public class CharacterStats : MonoBehaviour//stats 统计（statistics）
 
         if (closestEnemy != null)
         {
-            GameObject newShockStrike = Instantiate(shockStrikePrefab, transform.position, Quaternion.identity);
+            GameObject newShockStrike = Instantiate(shockStrikePrefab, transform.position, Quaternion.identity);    //Tip:初始化预制体 [SerializeField] private GameObject shockStrikePrefab;
             newShockStrike.GetComponent<ShockStrikeController>().Setup(shockDamage, closestEnemy.GetComponent<CharacterStats>());
 
         }
@@ -304,12 +318,23 @@ public class CharacterStats : MonoBehaviour//stats 统计（statistics）
             Die();
     }
 
+    public virtual void IncreaseHealthBy(int _amout)
+    {
+        currentHealth += _amout;
+
+        if (currentHealth > GetMaxHealthValue())
+            currentHealth = GetMaxHealthValue();
+
+        if (onHealthChanged != null)
+            onHealthChanged();
+    }
+
     protected virtual void DecreaseHealthBy(int _damage)
     {
         currentHealth -= _damage;
 
         if (onHealthChanged != null)
-            onHealthChanged();
+            onHealthChanged();  //// 事件委托：通知所有订阅者：血量变了！
     }
 
     protected virtual void Die()

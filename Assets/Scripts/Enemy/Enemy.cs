@@ -79,8 +79,11 @@ public class Enemy : Entity
         }
         
     }
-    
-    protected virtual IEnumerator FreezeTimerFor(float _seconds)
+
+    public virtual void FreezeTimeFor(float _duration) => StartCoroutine(FreezeTimeCoroutine(_duration));
+    //Tip:如何使用protected 或Private,public 一个函数返回就行了
+
+    protected virtual IEnumerator FreezeTimeCoroutine(float _seconds)
     {
         FreezeTime(true);
 
